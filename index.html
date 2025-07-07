@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Anúncios de Carros</title>
+  <style>
+    body { font-family: Arial, sans-serif; background: #f5f5f5; }
+    h1 { text-align: center; }
+    table { margin: 30px auto; border-collapse: collapse; width: 90%; background: #fff; }
+    th, td { border: 1px solid #ccc; padding: 10px; text-align: left; }
+    th { background: #eee; }
+    a { color: #0077cc; text-decoration: none; }
+    a:hover { text-decoration: underline; }
+  </style>
+</head>
+<body>
+  <h1>Anúncios de Carros</h1>
+  <table>
+    <thead>
+      <tr>
+        <th>Título</th>
+        <th>Categoria</th>
+        <th>Data</th>
+        <th>Link</th>
+      </tr>
+    </thead>
+    <tbody id="anuncios-tbody">
+      <!-- Os anúncios vão aparecer aqui -->
+    </tbody>
+  </table>
+  <script>
+    fetch('http://localhost:3000/anuncios')
+      .then(res => res.json())
+      .then(anuncios => {
+        const tbody = document.getElementById('anuncios-tbody');
+        anuncios.forEach(anuncio => {
+          const tr = document.createElement('tr');
+          tr.innerHTML = `
+            <td>${anuncio.titulo}</td>
+            <td>${anuncio.categoria}</td>
+            <td>${anuncio.data}</td>
+            <td><a href="${anuncio.link}" target="_blank">Ver anúncio</a></td>
+          `;
+          tbody.appendChild(tr);
+        });
+      })
+      .catch(err => {
+        alert('Ops! Ocorreu um erro\nTente novamente mais tarde');
+        console.error(err);
+      });
+  </script>
+</body>
+</html>
